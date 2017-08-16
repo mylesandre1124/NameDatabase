@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<VBox prefHeight="400.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.StudentUI">
+  <children>
+    <MenuBar style="-fx-background-color: gold;" VBox.vgrow="NEVER">
+      <menus>
+        <Menu mnemonicParsing="false" text="File">
+          <items>
+            <MenuItem mnemonicParsing="false" text="New" />
+            <MenuItem mnemonicParsing="false" onAction="#startHost" text="Start Host" />
+                  <MenuItem mnemonicParsing="false" onAction="#startClient" text="Start Client" />
+            <MenuItem mnemonicParsing="false" text="Quit" />
+          </items>
+        </Menu>
+        <Menu mnemonicParsing="false" text="Students">
+          <items>
+            <MenuItem mnemonicParsing="false" onAction="#importStudents" text="Import Students" />
+            <MenuItem mnemonicParsing="false" onAction="#exportCSV" text="Export Students" />
+          </items>
+        </Menu>
+            <Menu mnemonicParsing="false" text="Email">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Print" />
+              </items>
+            </Menu>
+      </menus>
+    </MenuBar>
+    <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+         <children>
+            <BorderPane prefHeight="371.0" prefWidth="640.0" style="-fx-background-color: black;">
+               <top>
+                  <Pane prefHeight="50.0" prefWidth="640.0" style="-fx-background-color: black;" BorderPane.alignment="CENTER">
+                     <children>
+                        <TextField fx:id="searchBar" layoutX="7.0" layoutY="12.0" />
+                        <ProgressBar fx:id="progressBar" layoutX="464.0" layoutY="15.0" prefHeight="20.0" prefWidth="162.0" progress="0.0" />
+                     </children>
+                  </Pane>
+               </top>
+               <center>
+                  <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="33.0" prefWidth="451.0" style="-fx-border-color: black; -fx-background-color: gold;" text="Student List" textAlignment="CENTER" />
+                              <Label alignment="CENTER" prefHeight="33.0" prefWidth="192.0" style="-fx-border-color: black; -fx-background-color: gold;" text="Email List" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="329.0" prefWidth="640.0">
+                           <children>
+                              <TableView fx:id="studentTable" prefHeight="294.0" prefWidth="460.0">
+                                 <columns>
+                                    <TableColumn fx:id="firstName" prefWidth="85.0" text="First Name" />
+                                    <TableColumn fx:id="lastName" prefWidth="89.0" text="Last Name" />
+                                    <TableColumn fx:id="studentId" prefWidth="63.0" text="ID#" />
+                                    <TableColumn fx:id="emailAddress" prefWidth="193.0" text="Email" />
+                                 </columns>
+                              </TableView>
+                              <TableView fx:id="emailTable" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="emailFirstName" prefWidth="96.0" text="First Name" />
+                                  <TableColumn fx:id="emailLastName" prefWidth="93.0" text="Last Name" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </center>
+               <bottom>
+                  <Pane prefHeight="30.0" prefWidth="640.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button layoutX="498.0" layoutY="1.0" mnemonicParsing="false" onAction="#sendEmail" style="-fx-background-color: gold;" text="Submit Email" />
+                     </children>
+                  </Pane>
+               </bottom>
+            </BorderPane>
+         </children>
+    </AnchorPane>
+  </children>
+</VBox>
