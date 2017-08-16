@@ -15,7 +15,6 @@ public class TableViewPopulator {
         ObservableList<Object> list = FXCollections.observableArrayList();
         for (int i = 0; i < data.size(); i++) {
             list.add(data.get(i));
-            //list.get(i).toString();
         }
         return list;
     }

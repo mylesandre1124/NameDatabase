@@ -35,6 +35,11 @@ public class ExcelIO {
         this.excelFile = excelFile;
     }
 
+    /**
+     * This method imports every single line of input from an excel file as long as no empty column is between them
+     * Returns an arraylist of the data
+     * @return ArrayList<ArrayList>
+     */
     public ArrayList<ArrayList> singleColumnInput()
     {
         Workbook workbook = null;
@@ -126,6 +131,16 @@ public class ExcelIO {
         return empty;
     }
 
+    /**
+     * This method takes a row of data and converts it into an object that is passed into it and returns the object.
+     * (Cast it when it is being returned)
+     *
+     * Pass a String ArrayList into this to denote what fields match what row number
+     * @param a
+     * @param fields
+     * @param data
+     * @return
+     */
     public Object convertRowToObject(Object a, ArrayList<String> fields, ArrayList data)
     {
         try {
