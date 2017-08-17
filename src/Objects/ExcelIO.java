@@ -133,7 +133,7 @@ public class ExcelIO {
 
     /**
      * This method takes a row of data and converts it into an object that is passed into it and returns the object.
-     * (Cast it when it is being returned)
+     * (Cast it when it is returned)
      *
      * Pass a String ArrayList into this to denote what fields match what row number
      * @param a
