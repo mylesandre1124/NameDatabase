@@ -64,11 +64,13 @@ public class HostManager {
         String localIPAddress = new Host().getComputerIpAddress();
         if(checkIfLocalHostExists())
         {
-            ObjectIO hostsFile = new ObjectIO(new File("hosts.hts"));
-            TreeMap<String, Host> hosts = (TreeMap<String, Host>) hostsFile.readObject();
-            //hosts.get();
+            ObjectIO hostsFile = new ObjectIO(new File("localhost.hts"));
+            Host localHost = (Host) hostsFile.readObject();
+            return localHost.getIpAddress().equals(localIPAddress);
         }
-        return true;
+        else {
+            return false;
+        }
     }
 
     public String getIpByUsername(String username) throws IOException {

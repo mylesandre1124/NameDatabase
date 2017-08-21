@@ -36,4 +36,7 @@ public class Host implements Serializable {
         this.username = username;
     }
 
+    public String getIpAddress() {
+        return ipAddress;
+    }
 }
