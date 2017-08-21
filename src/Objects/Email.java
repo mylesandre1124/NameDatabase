@@ -70,14 +70,14 @@ public class Email {
         if(sendOrReceive == 0) {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
-            props.put("mail.smtp.host", "zmta1.kennesaw.edu");
-            props.put("mail.smtp.port", "25");
+            props.put("mail.smtp.host", "smtp.office365.com");
+            props.put("mail.smtp.port", "587");
         }
         else if(sendOrReceive == 1)
         {
             props.put("mail.imap.auth", "true");
             props.put("mail.imap.starttls.enable", "true");
-            props.put("mail.imap.host", "email.kennesaw.edu");
+            props.put("mail.imap.host", "outlook.office365.com");
             props.put("mail.smtp.port", "993");
         }
 
@@ -110,7 +110,7 @@ public class Email {
                     "1000 S Marietta Pkwy\n" +
                     "Marietta, GA 30060\n" +
                     "470-578-4539");
-            storeMail(message);
+            //storeMail(message);
             Transport.send(message);
 
         } catch (AddressException e) {
@@ -128,7 +128,7 @@ public class Email {
     public void storeMail(Message message) throws MessagingException {
         Session session = login(1);
         Store store = session.getStore("imap");
-        store.connect("email.kennesaw.edu", getEmailAddress(), getEmailPassword());
+        store.connect("outlook.office365.com", getEmailAddress(), getEmailPassword());
         Folder folder = store.getFolder("Sent");
         folder.open(Folder.READ_WRITE);
         message.setFlag(Flags.Flag.SEEN, true);
@@ -146,7 +146,7 @@ public class Email {
     }
 
 
-    public static void main(String[] args) throws MessagingException, MessageNotSentException {
+    public static void main(String[] args) throws MessageNotSentException {
         Email email = new Email();
         email.openCredentials();
         ArrayList<String> emails = new ArrayList<>(Arrays.asList("mandre3@students.kennesaw.edu"));

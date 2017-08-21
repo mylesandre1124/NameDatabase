@@ -92,15 +92,7 @@ public class FTP {
     {
         boolean success = false;
         try {
-            FTPFile[] files = client.listFiles();
-            boolean exists = false;
-            for (int i = 0; i < files.length; i++) {
-                if(files[i].getName().equals(file))
-                {
-                    exists = true;
-                }
-            }
-            if(exists) {
+            if(checkIfFileExistsOnServer(file)) {
                 ObjectIO objectIO = new ObjectIO(new File(file));
                 OutputStream out = new BufferedOutputStream(new FileOutputStream(objectIO.getObjectFile()));
                 success = client.retrieveFile(file, out);
@@ -116,6 +108,17 @@ public class FTP {
             e.printStackTrace();
         }
         return success;
+    }
+
+    public boolean checkIfFileExistsOnServer(String fileName) throws IOException {
+        FTPFile[] filesInFTPServerFolder = client.listFiles();
+        for (int i = 0; i < filesInFTPServerFolder.length; i++) {
+            if(filesInFTPServerFolder[i].getName().equals(fileName))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static void main(String[] args) throws IOException {

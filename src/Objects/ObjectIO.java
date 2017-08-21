@@ -1,10 +1,6 @@
 package Objects;
 
-import UI.StudentUI;
-
 import java.io.*;
-import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * Created by Myles on 3/29/17.
@@ -14,7 +10,7 @@ public class ObjectIO {
     private File objectFile;
 
     public ObjectIO(File objectFile) {
-        this.objectFile = new File(getFolder().getAbsoluteFile() + File.separator + objectFile.getName());
+        this.objectFile = new File(getApplicationDataFolder().getAbsoluteFile() + File.separator + objectFile.getName());
     }
 
     public ObjectIO() {
@@ -25,7 +21,7 @@ public class ObjectIO {
     }
 
     public void setObjectFile(File objectFile) {
-        this.objectFile = new File(getFolder().getAbsoluteFile() + File.separator + objectFile.getName());
+        this.objectFile = new File(getApplicationDataFolder().getAbsoluteFile() + File.separator + objectFile.getName());
     }
 
     public void writeObject(Object object) {
@@ -73,7 +69,7 @@ public class ObjectIO {
         return object;
     }
 
-    public File getFolder()
+    public static File getApplicationDataFolder()
     {
         String documents = System.getProperty("user.home") + File.separator + "Documents";
         File file = new File(documents);
@@ -89,7 +85,7 @@ public class ObjectIO {
 
     public static void main(String[] args) {
         ObjectIO objectIO = new ObjectIO(new File(""));
-        objectIO.getFolder();
+        objectIO.getApplicationDataFolder();
     }
 
 }

@@ -162,20 +162,20 @@ public class ExcelIO {
         return a;
     }
 
-    public ArrayList separate(ArrayList list, int index)
+    public ArrayList separate(ArrayList studentRowData, int index)
     {
         ArrayList list1 = new ArrayList();
         if(index >= 0)
         {
-            String name = (String)list.get(index);
+            String name = (String)studentRowData.get(index);
             String[] names = name.split("  ", 2);
             for (int j = 0; j < names.length; j++) {
                 names[j] = names[j].replaceAll("\\s+$", "");
                 list1.add(names[j]);
             }
-            list.remove(index);
-            for (int i = 0; i < list.size(); i++) {
-                list1.add(list.get(i));
+            studentRowData.remove(index);
+            for (int i = 0; i < studentRowData.size(); i++) {
+                list1.add(studentRowData.get(i));
             }
         }
         return list1;

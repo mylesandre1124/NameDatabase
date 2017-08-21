@@ -2,7 +2,6 @@ package Objects;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.TreeMap;
 
 /**
@@ -23,7 +22,7 @@ public class HostManager {
         ftp.connect();
         boolean success = ftp.downloadFile("hosts.hts");
         ObjectIO objectIO = new ObjectIO();
-        File hostfile = new File(objectIO.getFolder() + "hosts.hts");
+        File hostfile = new File(objectIO.getApplicationDataFolder() + "hosts.hts");
         if(hostfile.exists()) {
             objectIO.setObjectFile(hostfile);
             this.hosts = (TreeMap<String, Host>) objectIO.readObject();
@@ -49,6 +48,29 @@ public class HostManager {
         }
     }
 
+    public boolean checkIfLocalHostExists()
+    {
+        return new File(ObjectIO.getApplicationDataFolder() + File.separator + "hosts.hts").exists();
+    }
+
+    public boolean checkIfHostsExistOnServer() throws IOException {
+        FTP ftp = new FTP("files.000webhost.com", 21);
+        ftp.login("studentemail", "megamacman11");
+        ftp.connect();
+        return ftp.checkIfFileExistsOnServer("hosts.hts");
+    }
+
+    public boolean checkIfLocalIpHasChanged(){
+        String localIPAddress = new Host().getComputerIpAddress();
+        if(checkIfLocalHostExists())
+        {
+            ObjectIO hostsFile = new ObjectIO(new File("hosts.hts"));
+            TreeMap<String, Host> hosts = (TreeMap<String, Host>) hostsFile.readObject();
+            //hosts.get();
+        }
+        return true;
+    }
+
     public String getIpByUsername(String username) throws IOException {
         getHosts();
         return this.hosts.get(username).getComputerIpAddress();
@@ -63,6 +85,7 @@ public class HostManager {
         for (int i = 0; i < hosts1.size(); i++) {
             System.out.println(hosts1.get(i).getComputerIpAddress());
         }*/
-        hostManager.getHosts();
+
+        //hostManager.getHosts();
     }
 }
