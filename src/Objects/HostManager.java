@@ -22,9 +22,9 @@ public class HostManager {
         ftp.connect();
         boolean success = ftp.downloadFile("hosts.hts");
         ObjectIO objectIO = new ObjectIO();
-        File hostfile = new File(objectIO.getApplicationDataFolder() + "hosts.hts");
-        if(hostfile.exists()) {
-            objectIO.setObjectFile(hostfile);
+        File hostFile = new File(objectIO.getApplicationDataFolder() + File.separator + "hosts.hts");
+        if(hostFile.exists()) {
+            objectIO.setObjectFile(hostFile);
             this.hosts = (TreeMap<String, Host>) objectIO.readObject();
         }
         if(!success) {
@@ -64,8 +64,8 @@ public class HostManager {
         String localIPAddress = new Host().getComputerIpAddress();
         if(checkIfLocalHostExists())
         {
-            ObjectIO hostsFile = new ObjectIO(new File("localhost.hts"));
-            Host localHost = (Host) hostsFile.readObject();
+            ObjectIO localHostObjectFile = new ObjectIO(new File("localhost.hts"));
+            Host localHost = (Host) localHostObjectFile.readObject();
             return localHost.getIpAddress().equals(localIPAddress);
         }
         else {

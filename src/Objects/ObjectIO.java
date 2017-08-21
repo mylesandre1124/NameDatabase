@@ -48,7 +48,7 @@ public class ObjectIO {
         try {
             InputStream file = new FileInputStream(getObjectFile());
             InputStream buffer = new BufferedInputStream(file);
-            ObjectInput input = new ObjectInputStream(buffer);
+            ObjectInput input = new ObjectInputStream(new BufferedInputStream(new FileInputStream(getObjectFile())));
 
             //deserialize the List
             try {
@@ -71,15 +71,14 @@ public class ObjectIO {
 
     public static File getApplicationDataFolder()
     {
-        String documents = System.getProperty("user.home") + File.separator + "Documents";
-        File file = new File(documents);
-        File studentEmail = null;
-        if(file.isDirectory())
+        File documentsFolder = new File(System.getProperty("user.home") + File.separator + "Documents");
+        File emailDataFolder = null;
+        if(documentsFolder.isDirectory())
         {
-            studentEmail = new File(file.getAbsolutePath() + File.separator + "Email Data");
-            studentEmail.mkdirs();
+            emailDataFolder = new File(documentsFolder.getAbsolutePath() + File.separator + "Email Data");
+            emailDataFolder.mkdirs();
         }
-        return studentEmail;
+        return emailDataFolder;
 
     }
 
