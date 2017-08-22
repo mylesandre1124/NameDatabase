@@ -2,6 +2,8 @@ package Objects;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.InetAddress;
+import java.util.Properties;
 import java.util.TreeMap;
 
 /**
@@ -79,7 +81,7 @@ public class HostManager {
     }
 
     public static void main(String[] args) throws IOException {
-        HostManager hostManager = new HostManager();
+        //HostManager hostManager = new HostManager();
         /*Host host = new Host();
         host.setUsername("Hello");
         hostManager.updateHosts(host);
@@ -89,5 +91,7 @@ public class HostManager {
         }*/
 
         //hostManager.getHosts();
+        Properties props = System.getProperties();
+        System.out.println(props.get("user.name"));
     }
 }

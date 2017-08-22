@@ -98,7 +98,7 @@ public class Email {
             }
             Session session = login(0);
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(getEmailAddress(), "KSU Post Office"));
+            message.setFrom(new InternetAddress("postoffice@kennesaw.edu", "KSU Post Office"));
             message.setRecipients(Message.RecipientType.TO,
                     addresses);
             message.setSubject("Letter");
@@ -110,9 +110,8 @@ public class Email {
                     "1000 S Marietta Pkwy\n" +
                     "Marietta, GA 30060\n" +
                     "470-578-4539");
-            //storeMail(message);
             Transport.send(message);
-
+            storeMail(message);
         } catch (AddressException e) {
             e.printStackTrace();
             throw new MessageNotSentException();
