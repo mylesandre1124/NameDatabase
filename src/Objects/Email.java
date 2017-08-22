@@ -26,6 +26,9 @@ public class Email {
     private String emailAddress;
     private String emailPassword;
 
+    private final int SMTP = 0;
+    private final int IMAP = 1;
+
     public String getEmailAddress() {
         return emailAddress;
     }
@@ -59,21 +62,17 @@ public class Email {
         emailPassword = credentials[1];
     }
 
-    public Session login(int sendOrReceive)
+    public Session login(int smtpOrImap)
     {
         Properties props = new Properties();
-        /*props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587");*/
 
-        if(sendOrReceive == 0) {
+        if(smtpOrImap == SMTP) {
             props.put("mail.smtp.auth", "true");
             props.put("mail.smtp.starttls.enable", "true");
             props.put("mail.smtp.host", "smtp.office365.com");
             props.put("mail.smtp.port", "587");
         }
-        else if(sendOrReceive == 1)
+        else if(smtpOrImap == IMAP)
         {
             props.put("mail.imap.auth", "true");
             props.put("mail.imap.starttls.enable", "true");
@@ -90,13 +89,13 @@ public class Email {
         return session;
     }
 
-    public void sendEmail(ArrayList<String> emails) throws MessageNotSentException {
+    public void sendEmail(ArrayList<String> emailAddressArrayList) throws MessageNotSentException {
         try {
-            InternetAddress[] addresses = new InternetAddress[emails.size()];
-            for (int i = 0; i < emails.size(); i++) {
-                addresses[i] = new InternetAddress(emails.get(i));
+            InternetAddress[] addresses = new InternetAddress[emailAddressArrayList.size()];
+            for (int i = 0; i < emailAddressArrayList.size(); i++) {
+                addresses[i] = new InternetAddress(emailAddressArrayList.get(i));
             }
-            Session session = login(0);
+            Session session = login(SMTP);
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("postoffice@kennesaw.edu", "KSU Post Office"));
             message.setRecipients(Message.RecipientType.TO,
@@ -125,7 +124,7 @@ public class Email {
     }
 
     public void storeMail(Message message) throws MessagingException {
-        Session session = login(1);
+        Session session = login(IMAP);
         Store store = session.getStore("imap");
         store.connect("outlook.office365.com", getEmailAddress(), getEmailPassword());
         Folder folder = store.getFolder("Sent");
@@ -143,7 +142,6 @@ public class Email {
         }
         sendEmail(emails);
     }
-
 
     public static void main(String[] args) throws MessageNotSentException {
         Email email = new Email();
