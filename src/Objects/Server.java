@@ -47,7 +47,7 @@ public class Server extends Thread{
         return ack;
     }
 
-    public Object recieveObject() throws IOException, ClassNotFoundException {
+    public Object receiveObject() throws IOException, ClassNotFoundException {
         return in.readObject();
     }
 

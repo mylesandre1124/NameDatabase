@@ -210,7 +210,7 @@ public class StudentUI {
             protected Object call() throws Exception {
                 Client client = new Client("127.0.0.1", 1025);
                 client.connect();
-                TreeMap<Long, Student> students = (TreeMap<Long, Student>) client.receive();
+                TreeMap<Long, Student> students = (TreeMap<Long, Student>) client.receiveObject();
                 client.sendAcknowledgement(students.size());
                 StudentDatabase studentDatabase = new StudentDatabase(students);
                 studentDatabase.writeStudents();
