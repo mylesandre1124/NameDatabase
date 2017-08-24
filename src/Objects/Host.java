@@ -10,10 +10,12 @@ import java.net.UnknownHostException;
 public class Host implements Serializable {
 
     private String ipAddress;
+    private String computerName;
     private String username;
 
     public Host() {
         getComputerIpAddress();
+        getComputerName();
     }
 
     public String getComputerIpAddress()
@@ -28,15 +30,34 @@ public class Host implements Serializable {
         return this.ipAddress;
     }
 
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getComputerName() {
+        String osName = System.getProperty("os.name").toLowerCase();
+        if (osName.startsWith("win"))
+        {
+            this.computerName = System.getenv("HOSTNAME");
+        }
+        else if(osName.startsWith("mac"))
+        {
+            this.computerName = System.getProperty("user.name");
+        }
+        return this.computerName;
     }
 
     public String getIpAddress() {
         return ipAddress;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("os.name").toLowerCase());
+
     }
 }

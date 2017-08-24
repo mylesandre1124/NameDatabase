@@ -135,7 +135,7 @@ public class Email {
         store.close();
     }
 
-    public void convertStudentToEmail(ArrayList<Student> students) throws MessageNotSentException {
+    public void sendEmailsFromStudentList(ArrayList<Student> students) throws MessageNotSentException {
         ArrayList<String> emails = new ArrayList<>();
         for (int i = 0; i < students.size(); i++) {
             emails.add(students.get(i).getEmailAddress());

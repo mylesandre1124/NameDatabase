@@ -6,7 +6,6 @@ import Objects.Exceptions.StudentAlreadyFoundException;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
@@ -15,12 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.net.InetAddress;
-import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeMap;
 
 public class StudentUI {
@@ -172,7 +166,7 @@ public class StudentUI {
         email.openCredentials();
         email.login(0);
         try {
-            email.convertStudentToEmail(emailList);
+            email.sendEmailsFromStudentList(emailList);
         } catch (MessageNotSentException e) {
             e.printStackTrace();
             CreateDialog cd = new CreateDialog();
@@ -234,6 +228,11 @@ public class StudentUI {
 
     }
 
+    @FXML
+    TextField usernameTextField = new TextField();
 
+    public void getUsername()
+    {
+    }
 
 }

@@ -2,7 +2,7 @@ package Objects;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.TreeMap;
 
@@ -50,7 +50,7 @@ public class HostManager {
         }
     }
 
-    public boolean checkIfLocalHostExists()
+    public boolean checkIfHostFileExists()
     {
         return new File(ObjectIO.getApplicationDataFolder() + File.separator + "hosts.hts").exists();
     }
@@ -64,11 +64,20 @@ public class HostManager {
 
     public boolean checkIfLocalIpHasChanged(){
         String localIPAddress = new Host().getComputerIpAddress();
-        if(checkIfLocalHostExists())
+        if(checkIfHostFileExists())
         {
-            ObjectIO localHostObjectFile = new ObjectIO(new File("localhost.hts"));
-            Host localHost = (Host) localHostObjectFile.readObject();
-            return localHost.getIpAddress().equals(localIPAddress);
+            ObjectIO localHostObjectFile = new ObjectIO(new File("hosts.hts"));
+            TreeMap<String, Host> hosts = (TreeMap<String, Host>) localHostObjectFile.readObject();
+            Host localHost = getLocalHostFromHostArrayList(new ArrayList<>(hosts.values()));
+            if(localHost.getIpAddress().equals(localIPAddress))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
         else {
             return false;
@@ -79,6 +88,18 @@ public class HostManager {
         getHosts();
         return this.hosts.get(username).getComputerIpAddress();
     }
+
+    public Host getLocalHostFromHostArrayList(ArrayList<Host> hostList)
+    {
+        for (int i = 0; i < hostList.size(); i++) {
+            if(hostList.get(i).getComputerName().equals(new Host().getComputerName()));
+            {
+                return hostList.get(i);
+            }
+        }
+        return null;
+    }
+
 
     public static void main(String[] args) throws IOException {
         //HostManager hostManager = new HostManager();
