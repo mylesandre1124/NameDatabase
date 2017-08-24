@@ -147,11 +147,11 @@ public class ExcelIO {
             for (int i = 0; i < fields.size(); i++) {
                 Field field = a.getClass().getDeclaredField(fields.get(i));
                 Class type = field.getType();
-                Converter converter = new Converter();
+                ObjectConverter objectConverter = new ObjectConverter();
                 //System.out.print(fields.get(i) + ": " + data.get(i) + " ");
-                converter.dataConverter(data.get(i));
+                objectConverter.dataConverter(data.get(i));
                 field.setAccessible(true);
-                field.set(a, converter.returnObject(type));
+                field.set(a, objectConverter.returnObject(type));
             }
             //System.out.println();
         } catch (NoSuchFieldException e) {

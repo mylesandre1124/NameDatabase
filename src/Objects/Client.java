@@ -64,12 +64,12 @@ public class Client /*extends Task<ObservableList<Student>>*/ {
         out.flush();
     }
 
-    public void send(Object data) throws IOException {
+    public void sendObject(Object data) throws IOException {
         out.writeObject(data);
         out.flush();
     }
 
-    public Object receive() throws IOException, ClassNotFoundException {
+    public Object receiveObject() throws IOException, ClassNotFoundException {
         return in.readObject();
     }
 

@@ -47,11 +47,11 @@ public class Server extends Thread{
         return ack;
     }
 
-    public Object recieve() throws IOException, ClassNotFoundException {
+    public Object recieveObject() throws IOException, ClassNotFoundException {
         return in.readObject();
     }
 
-    public void send(Object data) throws IOException {
+    public void sendObject(Object data) throws IOException {
         out.writeObject(data);
         out.flush();
     }
@@ -73,7 +73,7 @@ public class Server extends Thread{
         setPort(1025);
         try {
             connect();
-            send(object);
+            sendObject(object);
             int ack = receiveAcknowledgement();
             TreeMap<Long, Student> students = (TreeMap<Long, Student>) new ObjectIO(new File("students.sts")).readObject();
             if(ack == students.size()) {

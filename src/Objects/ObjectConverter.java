@@ -3,7 +3,7 @@ package Objects;
 /**
  * Created by Myles on 7/11/17.
  */
-public class Converter {
+public class ObjectConverter {
 
     private long longNum;
     private double doubleNum;
@@ -124,8 +124,8 @@ public class Converter {
     }
 
     public static void main(String[] args) {
-        Converter converter = new Converter();
-        converter.dataConverter(492839483874584L);
-        //System.out.println(converter.getIntNum());
+        ObjectConverter objectConverter = new ObjectConverter();
+        objectConverter.dataConverter(492839483874584L);
+        //System.out.println(objectConverter.getIntNum());
     }
 }
