@@ -41,7 +41,6 @@ public class HostManager {
         objectIO.writeObject(this.hosts);
         try {
             FTP ftp = new FTP();
-            //ftp.login();
             ftp.connect();
             ftp.uploadFile("hosts.hts");
         } catch (IOException e) {
