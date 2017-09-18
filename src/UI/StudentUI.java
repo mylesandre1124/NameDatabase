@@ -197,6 +197,11 @@ public class StudentUI {
 
     public void startHost()
     {
+        HostManager hostManager = new HostManager();
+        if(!hostManager.checkIfLocalHostIsCreated())
+        {
+
+        }
         new Thread(() -> {
             Server server = new Server(new StudentDatabase().readStudents());
             server.start();
@@ -208,7 +213,7 @@ public class StudentUI {
         Task task = new Task() {
             @Override
             protected Object call() throws Exception {
-                Client client = new Client("127.0.0.1", 1025);
+                Client client = new Client("168.28.186.130", 1025);
                 client.connect();
                 TreeMap<Long, Student> students = (TreeMap<Long, Student>) client.receiveObject();
                 client.sendAcknowledgement(students.size());

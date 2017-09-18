@@ -1,7 +1,9 @@
 package Objects;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.net.UnknownHostException;
 
 /**
@@ -56,8 +58,7 @@ public class Host implements Serializable {
         return ipAddress;
     }
 
-    public static void main(String[] args) {
-        System.out.println(System.getProperty("os.name").toLowerCase());
+    public static void main(String[] args) throws IOException {
 
     }
 }

@@ -3,7 +3,6 @@ package Objects;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.TreeMap;
 
 /**
@@ -18,7 +17,7 @@ public class HostManager {
         this.hosts.put(host.getUsername(), host);
     }
 
-    public TreeMap<String, Host> getHosts() throws IOException {
+    public TreeMap<String, Host> getHostsFromServer() throws IOException {
         FTP ftp = new FTP("files.000webhost.com", 21);
         ftp.login("studentemail", "megamacman11");
         ftp.connect();
@@ -36,7 +35,7 @@ public class HostManager {
     }
 
     public void updateHosts(Host host) throws IOException {
-        getHosts();
+        getHostsFromServer();
         addHost(host);
         ObjectIO objectIO = new ObjectIO(new File("hosts.hts"));
         objectIO.writeObject(this.hosts);
@@ -64,28 +63,19 @@ public class HostManager {
 
     public boolean checkIfLocalIpHasChanged(){
         String localIPAddress = new Host().getComputerIpAddress();
-        if(checkIfHostFileExists())
+        ObjectIO localHostObjectFile = new ObjectIO(new File("hosts.hts"));
+        TreeMap<String, Host> hosts = (TreeMap<String, Host>) localHostObjectFile.readObject();
+        Host localHost = getLocalHostFromHostArrayList(new ArrayList<>(hosts.values()));
+        boolean ipAddressChanged = false;
+        if(!localHost.getIpAddress().equals(localIPAddress) && localHost != null)
         {
-            ObjectIO localHostObjectFile = new ObjectIO(new File("hosts.hts"));
-            TreeMap<String, Host> hosts = (TreeMap<String, Host>) localHostObjectFile.readObject();
-            Host localHost = getLocalHostFromHostArrayList(new ArrayList<>(hosts.values()));
-            if(localHost.getIpAddress().equals(localIPAddress))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-
+            ipAddressChanged = true;
         }
-        else {
-            return false;
-        }
+        return ipAddressChanged;
     }
 
     public String getIpByUsername(String username) throws IOException {
-        getHosts();
+        getHostsFromServer();
         return this.hosts.get(username).getComputerIpAddress();
     }
 
@@ -100,19 +90,36 @@ public class HostManager {
         return null;
     }
 
+    public boolean checkIfLocalHostIsCreated()  {
+        boolean localHostExists = false;
+        try {
+            boolean server = checkIfHostsExistOnServer();
+            boolean local = checkIfHostFileExists();
+            if (server || local) {
+                localHostExists = true;
+            }
+            if(local)
+            {
+                Host localHost = getLocalHostFromHostArrayList((ArrayList<Host>) getHostsFromServer().values());
+                if(localHost == null)
+                {
+                    localHostExists = true;
+                }
+            }
+            else if(server)
+            {
+
+            }
+        }
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+        return localHostExists;
+    }
 
     public static void main(String[] args) throws IOException {
-        //HostManager hostManager = new HostManager();
-        /*Host host = new Host();
-        host.setUsername("Hello");
-        hostManager.updateHosts(host);
-        ArrayList<Host> hosts1 = new ArrayList<>(hostManager.getHosts().values());
-        for (int i = 0; i < hosts1.size(); i++) {
-            System.out.println(hosts1.get(i).getComputerIpAddress());
-        }*/
-
-        //hostManager.getHosts();
-        Properties props = System.getProperties();
-        System.out.println(props.get("user.name"));
+        HostManager hostManager = new HostManager();
+        System.out.print(hostManager.checkIfLocalHostIsCreated());
     }
 }
